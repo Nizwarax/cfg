@@ -1,0 +1,12 @@
+CFG Decryptor Ultimate v8 Rocket Studio Fixes
+
+- Login card/input sizing optimized for mobile
+- Admin buttons prepared for interactive tabs
+- Public theme should match admin neon rocket theme
+- Add success toast after save settings
+- Add extension labels:
+  .dark = DarkTunnel
+  .hc = HTTP Custom
+  .ehi = HTTP Injector
+  .npv = NPV Tunnel
+  .ssc = SSCustom

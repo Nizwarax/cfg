@@ -1,0 +1,6 @@
+CFG Decryptor Ultimate v7 Creator Studio
+- Admin home dashboard style
+- Rocket branding concept
+- Prepare admin account menu
+- Format label should use extensions:
+.dark .hc .ehi .npv .ssc

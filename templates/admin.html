@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🚀 VORTEX CFG Creator Studio</title>
+<style>
+:root{--bg:#050914;--card:#0b172b;--blue:#38bdf8;--orange:#fb923c;--line:#27466f}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:18px;background:radial-gradient(circle at top,#16345c,#050914 55%);color:#fff;font-family:Segoe UI,Arial,sans-serif}
+.box{max-width:700px;margin:auto;background:#0b172bdd;border:1px solid var(--line);border-radius:30px;padding:24px;box-shadow:0 0 60px #000}
+.brand-logo{display:flex;align-items:center;gap:14px}
+.brand-logo img{width:70px;height:70px;object-fit:contain}
+.logo{font-size:38px;font-weight:900;color:var(--blue)}
+.logo span{color:var(--orange)}
+h1{font-size:34px;margin:14px 0 0}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:25px 0}
+.tab{padding:15px;border:0;border-radius:18px;background:#102d59;color:#fff;font-size:18px;font-weight:700;cursor:pointer}
+.tab.active,.tab:hover{box-shadow:0 0 25px #38bdf8;background:#163b70}
+.panel{display:none;background:#07101f;border-radius:24px;padding:22px}
+.panel.show{display:block}
+input,button{width:100%;padding:14px 16px;border-radius:16px;border:1px solid #30496b;background:#091525;color:#fff;margin:8px 0;font-size:16px}
+button{background:linear-gradient(90deg,#0ea5e9,#fb923c);border:none;font-weight:700;cursor:pointer}
+label{display:block;color:#9fb3c8;margin-top:6px}
+input::placeholder{color:#7f91ab;opacity:1}
+input:focus{outline:none;border-color:rgba(56,189,248,.72);box-shadow:0 0 0 3px rgba(56,189,248,.12);background:#0b1830;color:#fff}
+input, input:hover, input:active{background:#091525;color:#fff;caret-color:#fff}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active{-webkit-text-fill-color:#fff !important;caret-color:#fff !important;-webkit-box-shadow:0 0 0 1000px #091525 inset !important;box-shadow:0 0 0 1000px #091525 inset !important;border:1px solid #30496b !important;transition:background-color 9999s ease-out 0s !important}
+.toast{display:none;background:#16a34a;padding:12px;border-radius:14px;margin-top:10px}
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:60px}
+.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:14px;padding:0;margin:0;border:1px solid rgba(111,168,220,.35);background:rgba(255,255,255,.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);transition:.18s ease;z-index:2}
+.eye-btn:hover{background:rgba(56,189,248,.14);border-color:rgba(56,189,248,.55);box-shadow:0 0 0 3px rgba(56,189,248,.08)}
+.eye-btn:active{transform:translateY(-50%) scale(.97)}
+.eye-btn svg{width:22px;height:22px;stroke:#cfe6ff;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.96;pointer-events:none}
+.eye-btn .eye-off{display:none}
+.eye-btn.showing .eye-on{display:none}
+.eye-btn.showing .eye-off{display:block}
+a.logout{display:inline-block;color:#38bdf8;margin-top:14px;font-size:16px}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="brand-logo">
+    <img src="/static/rocket_logo.png" alt="Rocket Logo">
+    <div class="logo">VORTEX <span>CFG</span></div>
+  </div>
+  <h1>Creator Studio Admin</h1>
+
+  {% if not logged %}
+  <div class="panel show">
+    <h2>🔐 Login Admin</h2>
+    <form method="post">
+      <input type="hidden" name="action" value="login">
+      <input name="username" placeholder="Username Admin">
+      <div class="pass-wrap">
+        <input id="loginPass" name="password" type="password" placeholder="Password Admin" autocomplete="current-password">
+        <button type="button" class="eye-btn" aria-label="Lihat password" onclick="togglePass('loginPass', this)">
+          <svg class="eye-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3.2"></circle></svg>
+          <svg class="eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path><path d="M9.9 5.2A11.5 11.5 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1"></path><path d="M6.2 6.3A18 18 0 0 0 2 12s3.6 7 10 7c1.8 0 3.4-.5 4.8-1.2"></path></svg>
+        </button>
+      </div>
+      <button>Masuk</button>
+    </form>
+    {% if error %}<p style="color:#f87171">{{error}}</p>{% endif %}
+  </div>
+  {% else %}
+
+  <div class="menu">
+    <button class="tab active" onclick="openTab('dash',this)">🏠 Dashboard</button>
+    <button class="tab" onclick="openTab('brand',this)">🎨 Branding</button>
+    <button class="tab" onclick="openTab('security',this)">🔐 Security</button>
+    <button class="tab" onclick="openTab('export',this)">📦 Export</button>
+  </div>
+
+  <div id="dash" class="panel show"><h2>🏠 Dashboard</h2><p>Selamat datang Admin VORTEX CFG 🚀</p></div>
+
+  <div id="brand" class="panel">
+    <h2>🎨 Branding</h2>
+    <form method="post">
+      <input type="hidden" name="action" value="save">
+      <label>Nama Script</label><input name="name" value="{{brand.name}}">
+      <label>Creator</label><input name="creator" value="{{brand.creator}}">
+      <label>Footer</label><input name="footer" value="{{brand.footer}}">
+      <button onclick="saveToast()">Simpan Pengaturan</button>
+    </form>
+  </div>
+
+  <div id="security" class="panel">
+    <h2>🔐 Admin Account</h2>
+    <form method="post">
+      <input type="hidden" name="action" value="account">
+      <label>Username Baru</label><input name="username" value="{{admin.username}}">
+      <label>Password Baru</label>
+      <div class="pass-wrap">
+        <input id="newPass" name="password" type="password" value="{{admin.password}}" autocomplete="new-password">
+        <button type="button" class="eye-btn" aria-label="Lihat password" onclick="togglePass('newPass', this)">
+          <svg class="eye-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3.2"></circle></svg>
+          <svg class="eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path><path d="M9.9 5.2A11.5 11.5 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1"></path><path d="M6.2 6.3A18 18 0 0 0 2 12s3.6 7 10 7c1.8 0 3.4-.5 4.8-1.2"></path></svg>
+        </button>
+      </div>
+      <button onclick="saveToast()">Simpan Akun</button>
+    </form>
+  </div>
+
+  <div id="export" class="panel">
+    <h2>📦 Export</h2>
+    <p>Format output:</p>
+    <p>.dark → DarkTunnel<br>.hc → HTTP Custom<br>.ehi → HTTP Injector<br>.npvt → NPV Tunnel<br>.ssc → SSCustom</p>
+  </div>
+
+  <div id="toast" class="toast">✅ Berhasil disimpan</div>
+  <a href="/admin/logout" class="logout">Keluar</a>
+  {% endif %}
+</div>
+
+<script>
+function openTab(id,btn){
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function saveToast(){setTimeout(()=>document.getElementById('toast').style.display='block',200)}
+function togglePass(id, btn){
+  const e=document.getElementById(id);
+  const showing=e.type==='text';
+  e.type=showing?'password':'text';
+  if(btn) btn.classList.toggle('showing', !showing);
+}
+</script>
+</body>
+</html>

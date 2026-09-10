@@ -1,0 +1,5 @@
+CFG Decryptor Ultimate v2
+Powered by @Dark_System
+Features: Smart Auto Scan + Batch Scanner + Railway Ready
+
+Fix: DarkTunnel .dark extension auto detection.

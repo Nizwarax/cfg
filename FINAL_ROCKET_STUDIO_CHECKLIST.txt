@@ -1,0 +1,10 @@
+CFG Decryptor Ultimate Rocket Studio
+
+Perubahan:
+- Icon akses admin diganti roket
+- Branding public diarahkan ke VORTEX Rocket
+- Admin tetap terpisah
+
+Catatan pengembangan:
+- Simpan username/password admin permanen perlu backend storage.
+- Tab admin perlu endpoint masing-masing bila ingin multi halaman penuh.
